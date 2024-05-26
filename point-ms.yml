@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: point-service-app
+  labels:
+    app: point-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : point-service-app
+  template:
+    metadata:
+      labels:
+        app: point-service-app
+    spec:
+      containers:
+      - name: point-service-app
+        image: ashan97/pot-v2-point-ms:1.00
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8083
+        env:
+          - name: MYSQL_HOST
+            value: point-db
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  point-service-svc
+spec:
+  selector:
+    app:  point-service-app
+  type: ClusterIP
+  ports:
+  - port:  8083
+    targetPort:  8083

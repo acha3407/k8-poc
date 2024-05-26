@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data2"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-mysql
+spec:
+  selector:
+    matchLabels:
+      app: test-mysql
+  serviceName: "test-mysql-stateful"
+  replicas: 1
+  # strategy:
+  #   type: Recreate
+  template:
+    metadata:
+      labels:
+        app: test-mysql
+    spec:
+      containers:
+        - image: mysql:5.7
+          name: test-mysql-image-name
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: keycloak_db
+          ports:
+            - containerPort: 3306
+              name: test-mysql-port
+          volumeMounts:
+            - name: test-mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: test-mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: test-mysql-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-mysql-service
+  labels:
+    app: test-mysql-service
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+    name: mysql
+  selector:
+    app: test-mysql
+  type: LoadBalancer
+
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: keycloak-mysql
+# spec:
+#   ports:
+#     - protocol: TCP
+#       port: 3307
+#       targetPort: 3306
+
+#   selector:
+#     app: keycloak-mysql
+#   clusterIP: None

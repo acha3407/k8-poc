@@ -1,0 +1,90 @@
+# apiVersion: v1
+# kind: "Secret"
+# metadata:
+#   name: tls-secret
+#   namespace: default
+# type: Opaque
+# data:
+#   tls.crt: "MIIC8DCCAdigAwIBAgIUNkaMpdLfmjcSPLoodHpo4b1ZM3wwDQYJKoZIhvcNAQELBQAwFDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTIyMDEyNTEyMDEwMloXDTIyMDIy NDEyMDEwMlowFDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvYLiCwdf57uYULZbueOOY7u4uectHUlB9lTlCA4DF5tkumNRZ7IU0Pf4QMkG945xJfnLCztudG6qVE+oTIgKeYpl6q1Jt4mHJf3Eyl6XZviUZri3U2VauXlWvr/rpX37jRSXcBtJ3AZ5/NUPwRnH4GhzgUnTpO8WpEjiizQjgw1b R+EPDzpoip/3FmuzayJSY6glKAK8fjnZ0Ef7NditdP/xMYplxxVIcu79FUXkwfJIXNCo46zN24d5na97JE7WJd9goQOLG3uT44ZSdaTM0wzTXal9xZIw9J54Y53gD9hXpubr9CnemJl285IP1iueEnXFnyzLu0PT/NCUa/h3/QIDAQABozowODAUBgNVHREEDTALgglsb2NhbGhvc3QwCwYDVR0PBAQDAgeAMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA0GCSqGSIb3DQEBCwUAA4IBAQA1vIfax+3l4FgA2HW3LnOxPdltcMPVeTnkw3xk8YEC5I4h6ouOsoCqgWFhIG+/pawYTuEIWsrgmq4JLD7/bnyFPt+Zs8uLOxa8aWQf DG08nJRVxergjkA3NQ7ZIjI8/IDWRoUz6YPCYAqa5egbJo+RfxSSJPdw4VRUTO6k HGwF6SLBRyyr3EDVqYdYh5KhUAYTe/2FuRSAJNAHMdChrRB8dS0qxSt+ykdSl1nb649dVBg6UuAqT3LSsW0bVdG00J9CR46c14Xn3GihZqx9Ic9GMEO85Zsm6pDyKe2PyTZJ2WCAr09BNZMuVZ6XZrk1caSg0t2wQbGYbs5eubAmVz9c"
+#   tls.key: "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9guILB1/nu5hQtlu5445ju7i55y0dSUH2VOUIDgMXm2S6Y1FnshTQ9/hAyQb3jnEl+csLO250bqpUT6hMiAp5imXqrUm3iYcl/cTKXpdm+JRmuLdTZVq5eVa+v+ulffuNFJdwG0ncBnn81Q/BGcfgaHOBSdOk7xakSOKLNCODDVtH4Q8POmiKn/cWa7NrIlJjqCUoArx+OdnQR/s12K10//EximXHFUhy7v0VReTB8khc0KjjrM3bh3mdr3skTtYl32ChA4sbe5PjhlJ1pMzTDNNdqX3FkjD0nnhjneAP2Fem5uv0Kd6YmXbzkg/WK54SdcWfLMu7Q9P80JRr+Hf9AgMBAAECggEAVfUtzk7UA2ollkaAqHo8taQKD9h5sBTwZGjxUYv5fxWuxJQT8nLl2jr/UXNdQ6BKVi1NGZUlbo5bl85hygTSq3pI6/8ZtrQcpvDJ9/ibt8r8lPMnxB3u3r3YyMCIhBH2rXEvl1vpTnFpl3KUqMOm03TNH1F7PA5uOKoOh5FooiH+ilWH/QJKAMkTNeGBR6birzfYbi7btYOisiCmQvyl9ANmN6WyjFKEHc6ZfhJZ57Wx/oCL3EFIIfvFzhEI4mMOK/GC36DXYf4YKsnPHJh/XKghH1EfMTQF1oaPc0l620fO42zYg1x46yt++gnr6yDdkbEjLw0I2ZBX3MiNUM1AyQKBgQDrYXjqyq3HArOzHRrirOAGLOGtPdRpetkdnyegWwmtnOC27yLRvy+xu48dz2AA2zT7N+k+xO2Lno13nOdEwAGGWVliG9tJgIHbCL+AWPhBZRmEOr4rn+cJFboNJJ87V2ERpInhfUsEIObR6DoKzM1IM/tS8icQCgu1hGpbApyEqwKBgQDOHMPbSP2g+HSB2fY94a/xUneESAX4K7Rx HVd34ViKv/rDLlbi83FbiCy0rB+o3804Bp6bC+lVZcfwhahoqAb21BZknTRSUprVdL3zheYOTfhJ7BxEXXskv5fFvf8OOmXby6mRSreLvWZS8Q1jd3UZehuskGTuU1sApVmvMddl9wKBgQCjgoSS5dSuCIx4gmFo0ZqV75ud0vO5imNElojadiNU/UOFEL3p YpxpJNeYZ7RTI/O8B+z5c6doc+3mB5MISTFF+M+EvcEpYCHU3FDbgfKCyw5cssnk WCIQR42FD8mlWV/O97PodjckWQ6/Bkk7s2VvIN0Xk6vbEn9ryt5u9nNwHQKBgGzFrW7aVE9RD1s/xb3ejtWSKdS7lbrkhbN0QqbXW7zNl+7NU7kttFMTyFQIyiR7B3hbtfQpExioQB3ky31/vz0frDmo5OXVBjVECMKtlT1TVIbefgRuOQCpw9Ttcd72Xq7i CjjM75RlfcyjvecSMdAiKtykzz8e6lWq7WuRqBT9AoGBAJicu6v6DdsS9YEdQzil9wSNRiScj/uhrR40evfcVwM4HUfBI+ZIj64w4yVlKXxXCvbSkF6nrw99qy6kvWX6WRJqkEnWG9GV4nw3y8GWxMTepGA+iQ9/HeOEAC+esdgN+eoP60ZhVbM5vFlmEDEs5jp95jNR2zDPTLYQJpoVJTb5" 
+
+# ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: default
+  labels:
+    app: keycloak
+spec:
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:11.0.3
+        env:
+        - name: KEYCLOAK_USER
+          value: "admin"
+        - name: KEYCLOAK_PASSWORD
+          value: "admin"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: DB_VENDOR  
+          value: mysql
+        - name: DB_ADDR 
+          value: keycloak-mysql-0.keycloak-mysql
+        - name: DB_DATABASE 
+          value: keycloak_db
+        - name: DB_PORT 
+          value: '3306'
+        - name: DB_USER
+          value: root
+        - name: DB_PASSWORD
+          value: password
+        # volumeMounts:
+        #   - name: "secrets"
+        #     mountPath: "/etc/x509/https/"
+        #     readOnly: true
+        # - name: crt.crt
+        #   mountPath: /etc/x509/https/tls.crt
+        #   subPath: ./tls.crt
+          # readOnly: false
+  
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        readinessProbe:
+          httpGet:
+            path: /auth/realms/master
+            port: 8080
+     
+      volumes:
+        - name: "secrets"
+          secret:
+            secretName: "tls-secret"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: keycloak
+  type: LoadBalancer

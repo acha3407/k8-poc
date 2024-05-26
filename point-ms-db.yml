@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: point-mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data-point"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: point-mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: point-mysql
+spec:
+  selector:
+    matchLabels:
+      app: point-mysql
+  serviceName: "point-mysql-stateful"
+  replicas: 1
+  # strategy:
+  #   type: Recreate
+  template:
+    metadata:
+      labels:
+        app: point-mysql
+    spec:
+      containers:
+        - image: mysql:8.0
+          name: point-mysql-image-name
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: keycloak_db
+          ports:
+            - containerPort: 3306
+              name: point-db-port
+          volumeMounts:
+            - name: point-mysql-persistent-storage
+              mountPath: /var/lib/mysql
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      volumes:
+        - name: point-mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: point-mysql-pv-claim
+
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: point-mysql-service-lb
+#   labels:
+#     app: point-mysql-service-lb
+# spec:
+#   ports:
+#   - port: 3307
+#     targetPort: 3306
+#     protocol: TCP
+#     name: mysql
+#   selector:
+#     app: point-mysql
+#   type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: point-db
+  labels:
+    app: point-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 3307
+      targetPort: 3306
+  selector:
+    app: point-mysql
+  clusterIP: None

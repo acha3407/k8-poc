@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pub-service-app
+  labels:
+    app: pub-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : pub-service-app
+  template:
+    metadata:
+      labels:
+        app: pub-service-app
+    spec:
+      containers:
+      - name: pub-service-app
+        image: ashan97/pot-v2-pub-ms:1.00
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8082
+        env:
+          - name: MYSQL_HOST
+            value: pub-db
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  pub-service-svc
+spec:
+  selector:
+    app:  pub-service-app
+  type: ClusterIP
+  ports:
+  - port:  8082
+    targetPort:  8082

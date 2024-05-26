@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pub-mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data-pub"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pub-mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pub-mysql
+spec:
+  selector:
+    matchLabels:
+      app: pub-mysql
+  serviceName: "pub-mysql-stateful"
+  replicas: 1
+  # strategy:
+  #   type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pub-mysql
+    spec:
+      containers:
+        - image: mysql:8.0
+          name: pub-mysql-image-name
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: keycloak_db
+          ports:
+            - containerPort: 3306
+              name: pub-mysql-port
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1000Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: pub-mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: pub-mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: pub-mysql-pv-claim
+
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: pub-mysql-service-lb
+#   labels:
+#     app: pub-mysql-service-lb
+# spec:
+#   ports:
+#   - port: 3307
+#     targetPort: 3306
+#     protocol: TCP
+#     name: mysql
+#   selector:
+#     app: pub-mysql
+#   type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pub-db
+  labels:
+    app: pub-db
+spec:
+  ports:
+    - protocol: TCP
+      port: 3307
+      targetPort: 3306
+  selector:
+    app: pub-mysql
+  clusterIP: None
